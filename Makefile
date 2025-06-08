@@ -82,6 +82,6 @@ check:
 #MAKEFILE VARIABLE
 
 NAME = castle 
-SCRS = xvideo.c screen.c sprite.c inout.c geometry.c maze.c zmundo.c zdraw.c zpersonaje.c zmain.c 
+SCRS = xvideo.c screen.c sprite.c inout.c geometry.c maze.c zmundo.c zdraw.c zgrafico.c zobjeto.c zpersonaje.c zmain.c 
 INCLUDES = -lX11
 

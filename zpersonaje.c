@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zpersonaje.c
   Creado: 06-06-2025
-  Ultima Modificacion: divendres, 6 de juny de 2025, 11:28:41
+  Ultima Modificacion: diumenge, 8 de juny de 2025, 06:19:26
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -48,7 +48,6 @@ static u1 personaje_mueve(s1 direccion) {
 	}
 	u2 fx=personaje.x+(dx)*direccion;
 	u2 fy=personaje.y+(dy)*direccion;
-	printf("%i,%i ",fx,fy);//dbg
 	if(mundo_get(fx,fy)) {
 		personaje.x=fx;
 		personaje.y=fy;

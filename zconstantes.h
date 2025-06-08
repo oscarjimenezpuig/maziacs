@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zconstantes.h
   Creado: 04-06-2025
-  Ultima Modificacion: divendres, 6 de juny de 2025, 11:20:15
+  Ultima Modificacion: diumenge, 8 de juny de 2025, 06:48:35
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -21,8 +21,15 @@
 #define PARDIM SCRW //definicion de la longitud de pared
 #define PFUGA {SCRW/2,(PARDIM/2),-PARDIM}
 #define VIS 20 //numero maximo de posiciones que se veran
+#define OBJETOS 256 //maximo de objetos a definir
+
+//vision de grafico
+#define FRONTAL 1
+#define LATERAL 2
+#define TRASERA 3
 
 #define PAIR(A) ((A)%2==0)
+#define ABS(A) (((A)>0)?(A):-(A))
 
 typedef double Punto[3];
 typedef double Vector[3];
@@ -39,7 +46,18 @@ typedef struct {
 	u1* sprite;
 } Grafico;
 
+typedef struct {
+	u1 id;
+	u1 tipo;
+	u2 x,y; //posicion del mundo
+	u2 altura; //altura a la que se vera el objeto
+	Grafico grafico[3];
+	u1 activo;
+	u1 face; //hacia donde esta enfocada la cara frontal
+} Objeto;
+
 extern Personaje personaje;
+extern Objeto objetos[OBJETOS];
 
 
 #endif //ZCONSTANTES_H
