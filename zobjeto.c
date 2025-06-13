@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zobjeto.c
   Creado: 08-06-2025
-  Ultima Modificacion: diumenge, 8 de juny de 2025, 07:45:15
+  Ultima Modificacion: divendres, 13 de juny de 2025, 15:40:49
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -158,7 +158,7 @@ static void objetos_on(struct Visto* vs) {
 	}
 }
 
-void visualizar_objetos() {
+u1 visualizar_objetos() {
 	struct Visto* v=objetos_vistos();
 	u1 r=(v)?1:0;
 	objetos_on(v);
