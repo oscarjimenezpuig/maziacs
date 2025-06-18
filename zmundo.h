@@ -2,12 +2,12 @@
 ============================================================
   Fichero: zmundo.h
   Creado: 04-06-2025
-  Ultima Modificacion: divendres, 6 de juny de 2025, 11:29:34
+  Ultima Modificacion: dilluns, 16 de juny de 2025, 09:08:40
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
 
-#include "zconstantes.h"
+#include "zproyecta.h"
 
 void mundo_new(u1 nivel);
 //crea mundo

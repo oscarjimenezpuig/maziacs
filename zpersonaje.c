@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zpersonaje.c
   Creado: 06-06-2025
-  Ultima Modificacion: diumenge, 8 de juny de 2025, 06:19:26
+  Ultima Modificacion: dilluns, 16 de juny de 2025, 10:27:55
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -32,6 +32,7 @@ static u1 personaje_gira(s1 direccion) {
 
 static u1 personaje_mueve(s1 direccion) {
 	s1 dx,dy;
+	dx=dy=0;
 	switch(personaje.face) {
 		case NORTH:
 			dy=-1;

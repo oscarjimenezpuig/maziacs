@@ -2,12 +2,12 @@
 ============================================================
   Fichero: zgrafico.h
   Creado: 06-06-2025
-  Ultima Modificacion: diumenge, 8 de juny de 2025, 06:49:55
+  Ultima Modificacion: dilluns, 16 de juny de 2025, 09:02:17
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
 
-#include "zdraw.h"
+#include "zmundo.h"
 
 Grafico grafico_new(u1 w,u1 h,u1* sprites);
 //creacion de un nuevo grafico

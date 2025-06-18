@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zconstantes.h
   Creado: 04-06-2025
-  Ultima Modificacion: diumenge, 8 de juny de 2025, 06:48:35
+  Ultima Modificacion: dimarts, 17 de juny de 2025, 08:43:06
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -25,11 +25,13 @@
 
 //vision de grafico
 #define FRONTAL 1
-#define LATERAL 2
+#define DERECHA 2
 #define TRASERA 3
+#define IZQUIERDA 4
 
 #define PAIR(A) ((A)%2==0)
 #define ABS(A) (((A)>0)?(A):-(A))
+#define DSM(X,Y,Z,T) (ABS((X)-(Z))+ABS((Y)-(T)))
 
 typedef double Punto[3];
 typedef double Vector[3];
@@ -51,7 +53,7 @@ typedef struct {
 	u1 tipo;
 	u2 x,y; //posicion del mundo
 	u2 altura; //altura a la que se vera el objeto
-	Grafico grafico[3];
+	Grafico* grafico[4];
 	u1 activo;
 	u1 face; //hacia donde esta enfocada la cara frontal
 } Objeto;

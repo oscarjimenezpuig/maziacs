@@ -2,21 +2,12 @@
 ============================================================
   Fichero: zdraw.c
   Creado: 04-06-2025
-  Ultima Modificacion: divendres, 6 de juny de 2025, 11:36:47
+  Ultima Modificacion: dilluns, 16 de juny de 2025, 09:10:03
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
 
 #include "zdraw.h"
-
-void proyecta(Punto o,Punto p) {
-	Punto pf=PFUGA;
-	double k=1/(1-(o[2]/pf[2]));
-	p[0]=pf[0]+k*(o[0]-pf[0]);
-	p[1]=SCRH-(pf[1]+k*(o[1]-pf[1]));
-	p[2]=0;
-	for(u1 k=0;k<2;k++) if(p[k]<0) p[k]=0; 
-}
 
 static void edgesget(Punto e,Vector n,u2* edge) {
 	Vector cn={1-n[0],0,1-n[2]};
@@ -154,7 +145,7 @@ static void desp(u1 d,int* x,int* y) {
 }
 
 			
-void total_draw(u2 x,u2 y,u1 d) {
+u1 total_draw(u2 x,u2 y,u1 d) {
 	u1 bloc=0;
 	u1 salidas[VIS];
 	int rx=x;
@@ -169,6 +160,7 @@ void total_draw(u2 x,u2 y,u1 d) {
 		nubes(k);
 
 	}
+	return visualizar_objetos(x,y,d);
 }
 
 	
