@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zgrafico.h
   Creado: 06-06-2025
-  Ultima Modificacion: dilluns, 16 de juny de 2025, 09:02:17
+  Ultima Modificacion: dimecres, 18 de juny de 2025, 20:27:21
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -22,4 +22,6 @@ void grafico_on(Grafico g,u2 altura,u1 bloc);
 void grafico_off(Grafico g,u2 altura,u1 bloc);
 //desconecta el grafico (mismas condiciones que la conexion)
 
+u1 sprite_data_new(u1 sprite,char white,char* data[]);
+//creacion de un sprite a partir de cadenas de caracteres (el blanco sera no conectado)
 

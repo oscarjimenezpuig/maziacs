@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zmundo.c
   Creado: 04-06-2025
-  Ultima Modificacion: dilluns, 16 de juny de 2025, 10:26:08
+  Ultima Modificacion: dijous, 19 de juny de 2025, 04:39:06
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -16,7 +16,8 @@ static void set(u1 x,u1 y) {
 	mundo[x+y*mundo_dimension]=1;
 }
 
-void mundo_new(u1 dimension) {
+void mundo_new(u1 nivel) {
+	u1 dimension=nivel*FACNIV;
 	mundo_dimension=3*dimension;
 	mundo=malloc(sizeof(u1)*mundo_dimension*mundo_dimension);
 	if(mundo) {
@@ -63,6 +64,19 @@ u2 mundo_dim() {
 	return mundo_dimension;
 }
 
+void mundo_rand(u2* x,u2* y) {
+	if(mundo_dimension) {
+		u2 xx,yy;
+		xx=yy=0;
+		while(!mundo_get(xx,yy)) {
+			xx=rand()%mundo_dimension;
+			yy=rand()%mundo_dimension;
+		}
+		*x=xx;
+		*y=yy;
+	}
+}
+
 void mundo_prt(u2 x,u2 y) {
 	char chr;
 	for(u2 j=0;j<mundo_dimension;j++) {
@@ -75,4 +89,5 @@ void mundo_prt(u2 x,u2 y) {
 		puts("");
 	}
 }
+
 

@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zdraw.c
   Creado: 04-06-2025
-  Ultima Modificacion: dilluns, 16 de juny de 2025, 09:10:03
+  Ultima Modificacion: dimecres, 18 de juny de 2025, 17:57:16
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -146,6 +146,7 @@ static void desp(u1 d,int* x,int* y) {
 
 			
 u1 total_draw(u2 x,u2 y,u1 d) {
+	u1 ret=0;
 	u1 bloc=0;
 	u1 salidas[VIS];
 	int rx=x;
@@ -160,7 +161,8 @@ u1 total_draw(u2 x,u2 y,u1 d) {
 		nubes(k);
 
 	}
-	return visualizar_objetos(x,y,d);
+	ret=visualizar_objetos(x,y,d);
+	return ret;
 }
 
 	

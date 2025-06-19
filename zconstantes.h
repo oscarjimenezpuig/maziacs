@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zconstantes.h
   Creado: 04-06-2025
-  Ultima Modificacion: dimarts, 17 de juny de 2025, 08:43:06
+  Ultima Modificacion: dijous, 19 de juny de 2025, 05:04:26
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -22,6 +22,14 @@
 #define PFUGA {SCRW/2,(PARDIM/2),-PARDIM}
 #define VIS 20 //numero maximo de posiciones que se veran
 #define OBJETOS 256 //maximo de objetos a definir
+#define FACNIV 3 //este factor multiplicado por el nivel da la dimension lateral del laberinto
+#define SPRDIM 64 //dimension del sprite en un primer plano
+
+//tipos
+#define COGIBLE 1
+
+//identificadores
+#define TESORO 1
 
 //vision de grafico
 #define FRONTAL 1
@@ -37,13 +45,6 @@ typedef double Punto[3];
 typedef double Vector[3];
 
 typedef struct {
-	u2 x,y;
-	u1 nivel;
-	u1 face;
-	u1 vivo;
-} Personaje;
-
-typedef struct {
 	u1 w,h;
 	u1* sprite;
 } Grafico;
@@ -51,12 +52,21 @@ typedef struct {
 typedef struct {
 	u1 id;
 	u1 tipo;
+	char* nombre;
 	u2 x,y; //posicion del mundo
 	u2 altura; //altura a la que se vera el objeto
 	Grafico* grafico[4];
 	u1 activo;
 	u1 face; //hacia donde esta enfocada la cara frontal
 } Objeto;
+
+typedef struct {
+	u2 x,y;
+	u1 nivel;
+	u1 face;
+	u1 vivo;
+	u1 objeto;
+} Personaje;
 
 extern Personaje personaje;
 extern Objeto objetos[OBJETOS];

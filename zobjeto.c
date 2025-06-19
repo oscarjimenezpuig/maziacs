@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zobjeto.c
   Creado: 08-06-2025
-  Ultima Modificacion: dimarts, 17 de juny de 2025, 14:31:35
+  Ultima Modificacion: dijous, 19 de juny de 2025, 05:04:48
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -25,7 +25,7 @@ u1 objeto_new(Objeto o) {
 		def=1;
 	}
 	Objeto* ptr=objetos+o.id;
-	if(ptr->tipo==0) {
+	if(ptr->tipo==0 && ptr->id!=0) {
 		*ptr=o;
 		ptr->activo=1;
 		return 1;
@@ -36,6 +36,13 @@ u1 objeto_new(Objeto o) {
 void objeto_del(u1 id) {
 	objetos[id].tipo=0;
 	objetos[id].activo=0;
+}
+
+Objeto* objeto_get(u1 id) {
+	if(objetos[id].tipo!=0) {
+		return objetos+id;
+	}
+	return NULL;
 }
 
 static u1 examinar_desplazar(u1 dir,u2* vx,u2* vy) {
@@ -82,12 +89,9 @@ static void visualizar(u1 x,u1 y,u1 dir) {
 	while(vistos) {
 		u1 no=visto[--vistos];
 		Objeto* o=objetos+no;
-		printf("Numero de objeto=%i\n",no);//dbg
-		printf("px=%i py=%i ox=%i oy=%i\n",x,y,o->x,o->y);//dbg
 		u4 dm=DSM(x,y,o->x,o->y);
 		u1 gr=MIR[dirn(dir)][dirn(o->face)];
-		printf("dm=%i gr=%i\n",dm,gr);//dbg
-		grafico_on(*(o->grafico[gr]),o->altura,dm);	
+		grafico_on(*(o->grafico[gr-1]),o->altura,dm);	
 	}
 }
 
@@ -96,7 +100,6 @@ u1 visualizar_objetos(u1 x,u1 y,u1 dir) {
 	u2 vx=x;
 	u2 vy=y;
 	while(examinar_desplazar(dir,&vx,&vy));
-	printf("vistos=%i\n",vistos);//dbg
 	if(vistos) {
 		visualizar(x,y,dir);
 		return 1;

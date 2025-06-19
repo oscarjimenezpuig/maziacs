@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zpersonaje.c
   Creado: 06-06-2025
-  Ultima Modificacion: dilluns, 16 de juny de 2025, 10:27:55
+  Ultima Modificacion: dijous, 19 de juny de 2025, 05:05:50
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -24,9 +24,7 @@ static u1 personaje_gira(s1 direccion) {
 	u1 k=0;
 	for(;k<4;k++) if(DIRS[k]==personaje.face) break;
 	k=(k+dir)%4;
-	printf("direccion=%i\n",k);//dbg
 	personaje.face=DIRS[k];
-	printf("face=%i\n",DIRS[k]);//dbg
 	return 1;
 }
 
