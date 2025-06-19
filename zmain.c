@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zmain.c
   Creado: 04-06-2025
-  Ultima Modificacion: dijous, 19 de juny de 2025, 04:36:27
+  Ultima Modificacion: dijous, 19 de juny de 2025, 08:57:34
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -40,6 +40,7 @@ int main() {
 	while(kread()!=ESCAPE) {
 		if(changes) {
 			total_draw(personaje.x,personaje.y,personaje.face);
+			personaje_marc();
 			mundo_prt(personaje.x,personaje.y);
 			printf("posicion=%i,%i\n",personaje.x,personaje.y);//dbg
 		}

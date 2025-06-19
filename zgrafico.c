@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zgrafico.c
   Creado: 06-06-2025
-  Ultima Modificacion: dijous, 19 de juny de 2025, 05:00:49
+  Ultima Modificacion: dijous, 19 de juny de 2025, 08:50:04
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -42,11 +42,24 @@ static double ratio_previa(u1 b) {
 	return ((ppod[0]-ppoi[0])/SPRDIM);
 }
 
+static void grafico_clear(u2 px,u2 py,u1 w,u1 h,u1 ratio) {
+	u2 ix=px;
+	u2 iy=py-(ratio*8*(h-1));
+	u2 lx=px+w*8*ratio;
+	u2 ly=py+h*8*ratio;
+	for(u2 i=ix;i<lx;i++) {
+		for(u2 j=iy;j<ly;j++) {
+			off(i,j);
+		}
+	}
+}
+
 static void sprite_onoff(u1 sprite,u1 gh,u2 base_x,u2 base_y,u1 fila,u1 columna,double ratio,u1 on) {
 	u2 px=base_x+ratio*8*columna;
 	u2 py=base_y-(ratio*8*(gh-1-fila));
-	if(on) son(sprite,px,py,ratio,NAT);	
-	else soff(sprite,px,py,ratio,NAT);
+	if(on) {
+		son(sprite,px,py,ratio,NAT);	
+	} else soff(sprite,px,py,ratio,NAT);
 }
 
 static void grafico_onoff(Grafico g,u1 a,u1 b,u1 on) {
@@ -55,6 +68,7 @@ static void grafico_onoff(Grafico g,u1 a,u1 b,u1 on) {
 	Punto pgp;
 	proyecta(pgo,pgp);
 	double ratio=FACTOR*ratio_previa(b);
+	if(on) grafico_clear(pgp[0],pgp[1],g.w,g.h,ratio);
 	for(u1 f=0;f<g.h;f++) {
 		for(u1 c=0;c<g.w;c++) {
 			sprite_onoff(*(g.sprite+c+f*g.w),g.h,pgp[0],pgp[1],f,c,ratio,on);

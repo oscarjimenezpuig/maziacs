@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zitems.c
   Creado: 18-06-2025
-  Ultima Modificacion: dijous, 19 de juny de 2025, 04:53:05
+  Ultima Modificacion: dijous, 19 de juny de 2025, 08:19:02
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -31,17 +31,19 @@ void tesoro_define(u1 n) {
 		snew(136,0,0,0,0,0,0,255,255);
 		u1 spt[]={128,129,130,131,136,133};
 		gtesoro[2]=grafico_new(3,2,spt);
+		puts("Grafico tesoro");//dbg
 		//objeto
 		Objeto dt={TESORO,COGIBLE,"TREASURE",0,0,0,{gtesoro,gtesoro+1,gtesoro+2,gtesoro+1},1,NORTH};
-		objeto_new(dt);
-		gtedef=1;
+		gtedef=objeto_new(dt);
+		tesoro_define(n);
+	} else {
+		Objeto* ot=objeto_get(TESORO);
+		ot->x=ot->y=1;
+		while(ot->x==1 && ot->y==1) {
+			mundo_rand(&(ot->x),&(ot->y));
+		}
+		ot->face=NORTH<<(rand()%4);
 	}
-	Objeto* ot=objeto_get(TESORO);
-	ot->x=ot->y=1;
-	while(ot->x==1 && ot->y==1) {
-		mundo_rand(&(ot->x),&(ot->y));
-	}
-	ot->face=NORTH<<(rand()%4);
 }
 
 void items_free() {

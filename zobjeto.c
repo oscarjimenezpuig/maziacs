@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zobjeto.c
   Creado: 08-06-2025
-  Ultima Modificacion: dijous, 19 de juny de 2025, 05:04:48
+  Ultima Modificacion: dijous, 19 de juny de 2025, 08:20:29
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -25,7 +25,7 @@ u1 objeto_new(Objeto o) {
 		def=1;
 	}
 	Objeto* ptr=objetos+o.id;
-	if(ptr->tipo==0 && ptr->id!=0) {
+	if(ptr->tipo==0 && o.tipo!=0 && o.id!=0) {
 		*ptr=o;
 		ptr->activo=1;
 		return 1;

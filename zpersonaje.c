@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zpersonaje.c
   Creado: 06-06-2025
-  Ultima Modificacion: dijous, 19 de juny de 2025, 05:05:50
+  Ultima Modificacion: dijous, 19 de juny de 2025, 08:58:07
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -63,6 +63,16 @@ u1 personaje_act() {
 	if(kison(DOWN)) r|=personaje_mueve(-1);
 	return r;
 }
+
+void personaje_marc() {
+	//nivel
+	u2 x,y;
+	x=y=1;
+	char str[20];
+	sprintf(str,"LEVEL %i",nivel);
+	ston(&x,&y,1,0,MRCRAT,NAT,str);
+}
+		
 
 
 	

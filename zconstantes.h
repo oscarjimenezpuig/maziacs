@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zconstantes.h
   Creado: 04-06-2025
-  Ultima Modificacion: dijous, 19 de juny de 2025, 05:04:26
+  Ultima Modificacion: dijous, 19 de juny de 2025, 08:53:26
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -24,6 +24,7 @@
 #define OBJETOS 256 //maximo de objetos a definir
 #define FACNIV 3 //este factor multiplicado por el nivel da la dimension lateral del laberinto
 #define SPRDIM 64 //dimension del sprite en un primer plano
+#define MRCRAT 2 //ratio de aumento de los marcadores
 
 //tipos
 #define COGIBLE 1
@@ -70,6 +71,8 @@ typedef struct {
 
 extern Personaje personaje;
 extern Objeto objetos[OBJETOS];
+
+extern u1 nivel;
 
 
 #endif //ZCONSTANTES_H
