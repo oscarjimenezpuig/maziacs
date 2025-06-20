@@ -2,15 +2,64 @@
 ============================================================
   Fichero: zitems.c
   Creado: 18-06-2025
-  Ultima Modificacion: divendres, 20 de juny de 2025, 05:40:29
+  Ultima Modificacion: divendres, 20 de juny de 2025, 13:26:17
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
 
 #include "zitems.h"
 
+static Grafico gpuerta;
 static Grafico gtesoro[3];
 static Grafico gespada;
+
+void puerta_define() {
+	static u1 gpudef=0;
+	if(!gpudef) {
+		char* dpuet[]={
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"0000000000",
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"0000000000",
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"0000000000",
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"0000000000",
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"0000000000",
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"1111111111",
+				"0000000000",
+		};
+		gpuerta=grafico_new(10,36,'0',dpuet);
+		gpudef=1;
+	}
+	Objeto opdef={PUERTA,SALIDA,"DOOR",1,1,0,{&gpuerta,&gpuerta,&gpuerta,&gpuerta},1,NORTH};
+	objeto_new(opdef);
+}
 
 void tesoro_define(u1 n) {
 	static u1 gtedef=0;
@@ -87,34 +136,60 @@ void tesoro_define(u1 n) {
 	}
 }
 
+static void espada_coloca(u1 id,u2* x,u2* y) {
+	u1 ok=0;
+	while(!ok) {
+		mundo_rand(x,y);
+		ok=1;
+		for(u1 k=ESPADA_MIN;k<id;k++) {
+			Objeto* oe=objeto_get(k);
+			if(*x==oe->x && *y==oe->y) {
+				ok=0;
+				break;
+			}
+		}
+	}
+}
+
 void espadas_define(u1 nivel) {
 	static u1 gedef=0;
 	if(!gedef) {
 		//grafico
 		char* detot[] = {
 				"00000100000",
-				"00001010000",
-				"00010001000",
-				"00010001000",
-				"00010001000",
-				"00010001000",
-				"00010001000",
-				"00010001000",
-				"00010001000",
-				"00010001000",
-				"00010001000",
-				"00010001000",
-				"00010001000",
-				"01001110010",
-				"11111111111",
-				"01001110010",
 				"00001110000",
-				"00001010000",
+				"00010111000",
+				"00010111000",
+				"00010111000",
+				"00010111000",
+				"00010111000",
+				"00010111000",
+				"00010111000",
+				"00010111000",
+				"00010111000",
+				"00010111000",
+				"00010111000",
+				"00010111000",
+				"00010111000",
+				"00010111000",
+				"00010111000",
+				"00010111000",
+				"00010111000",
+				"00010111000",
+				"00010011000",
+				"00010011000",
+				"00010001000",
 				"00001110000",
-				"00001010000",
+				"01111111110",
+				"01111111110",
+				"00001110000",
+				"00000000000",
+				"00001110000",
+				"00000000000",
+				"00001110000",
 				"00000100000"
 		};
-		gespada=grafico_new(11,22,'0',detot);
+		gespada=grafico_new(11,32,'0',detot);
 		gedef=1;
 	}
 	u1 espadas=nivel-1;
@@ -124,15 +199,15 @@ void espadas_define(u1 nivel) {
 			Objeto de={k,COGIBLE|ARMA,"SWORD",0,0,0,{&gespada,&gespada,&gespada,&gespada},1,NORTH};
 			objeto_new(de);
 			Objeto* oe=objeto_get(k);
-			if(oe) mundo_rand(&oe->x,&oe->y);
-			//TODO Modificar la posicion para que solo haya un objeto por localizacion
-			//TODO Modificar grafico de la espada (dimensiones mal)
+			if(oe) espada_coloca(k,&(oe->x),&(oe->y));
 		}
 	}
 }
 
 void items_free() {
+	grafico_del(&gpuerta);
 	for(u1 k=0;k<3;k++) {
 		grafico_del(gtesoro+k);
 	}
+	grafico_del(&gespada);
 }

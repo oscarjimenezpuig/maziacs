@@ -2,12 +2,15 @@
 ============================================================
   Fichero: zitems.h
   Creado: 18-06-2025
-  Ultima Modificacion: dimecres, 18 de juny de 2025, 20:34:46
+  Ultima Modificacion: divendres, 20 de juny de 2025, 13:20:50
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
 
 #include "zpersonaje.h"
+
+void puerta_define();
+//define el grafico de una puerta
 
 void tesoro_define(u1 nivel);
 //crea el tesoro y lo coloca en algun lugar del laberinto
