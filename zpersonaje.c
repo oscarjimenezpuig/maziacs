@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zpersonaje.c
   Creado: 06-06-2025
-  Ultima Modificacion: dijous, 19 de juny de 2025, 08:58:07
+  Ultima Modificacion: divendres, 20 de juny de 2025, 05:15:54
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -55,13 +55,55 @@ static u1 personaje_mueve(s1 direccion) {
 	return 0;
 }
 
+static u1 concog(Objeto* o) {
+	return (o->activo && (o->tipo & COGIBLE) && o->x==personaje.x && o->y==personaje.y);
+}
+
+static u1 personaje_coge() {
+	Objeto* o[OBJETOS];
+	u1 os=objeto_find(o,concog);
+	if(os) {
+		Objeto* poseido=objeto_get(personaje.objeto);
+		if(!poseido || poseido->tipo!=o[0]->tipo) {
+			o[0]->x=o[0]->y=-1;
+			personaje.objeto=o[0]->id;
+			if(poseido) {
+				poseido->x=personaje.x;
+				poseido->y=personaje.y;
+			}
+		return 1;
+		}
+	}
+	return 0;
+}	
+
 u1 personaje_act() {
 	u1 r=0;
 	if(kison(LEFT)) r|=personaje_gira(-1);
 	if(kison(RIGHT)) r|=personaje_gira(1);
 	if(kison(UP)) r|=personaje_mueve(1);
 	if(kison(DOWN)) r|=personaje_mueve(-1);
+	if(kison(SPACE)) r|=personaje_coge();
 	return r;
+}
+
+static u1 cara(u1 dir) {
+	switch(dir) {
+		case NORTH:
+			return 0;
+		case SOUTH:
+			return 1;
+		case EAST:
+			return 2;
+		default:
+			return 3;
+	}
+}
+
+static u2 len(char* str) {
+	char* ptr=str;
+	while(*ptr!='\0') ptr++;
+	return ptr-str;
 }
 
 void personaje_marc() {
@@ -71,7 +113,26 @@ void personaje_marc() {
 	char str[20];
 	sprintf(str,"LEVEL %i",nivel);
 	ston(&x,&y,1,0,MRCRAT,NAT,str);
+	//encarado
+	char* const DIRF[]={"NORTH","SOUTH","EAST","WEST"};
+	sprintf(str,"%s",DIRF[cara(personaje.face)]);
+	x=1;
+	y=SCRH-8*MRCRAT;
+	ston(&x,&y,1,0,MRCRAT,NAT,str);
+	//poseido
+	if(personaje.objeto) {
+		Objeto* op=objeto_get(personaje.objeto);
+		sprintf(str,"%s",op->nombre);
+		u2 l=len(str);
+		x=SCRW-(l*8*MRCRAT+1);
+		ston(&x,&y,1,0,MRCRAT,NAT,str);
+	}
 }
+
+u1 personaje_mens(char* men,Attribute a,u1 r) {
+}
+
+
 		
 
 

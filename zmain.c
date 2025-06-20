@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zmain.c
   Creado: 04-06-2025
-  Ultima Modificacion: dijous, 19 de juny de 2025, 08:57:34
+  Ultima Modificacion: divendres, 20 de juny de 2025, 05:34:06
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -11,7 +11,7 @@
 
 #include <time.h>
 
-u1 nivel=1;
+u1 nivel=2;
 
 void pausa(double time) {
 	clock_t fin=clock()+CLOCKS_PER_SEC*time;
@@ -25,6 +25,7 @@ void mundo_inicia() {
 	puts("Mundo");
 	tesoro_define(nivel);
 	puts("Tesoro");
+	espadas_define(nivel);
 }
 
 void mundo_finaliza() {

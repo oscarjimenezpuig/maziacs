@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zconstantes.h
   Creado: 04-06-2025
-  Ultima Modificacion: dijous, 19 de juny de 2025, 08:53:26
+  Ultima Modificacion: divendres, 20 de juny de 2025, 05:33:30
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -23,14 +23,17 @@
 #define VIS 20 //numero maximo de posiciones que se veran
 #define OBJETOS 256 //maximo de objetos a definir
 #define FACNIV 3 //este factor multiplicado por el nivel da la dimension lateral del laberinto
-#define SPRDIM 64 //dimension del sprite en un primer plano
+#define PIXDIM 8 //dimension del pixel en un primer plano
 #define MRCRAT 2 //ratio de aumento de los marcadores
 
 //tipos
 #define COGIBLE 1
+#define ARMA 2
 
 //identificadores
 #define TESORO 1
+#define ESPADA_MIN 2
+#define ESPADA_MAX 12
 
 //vision de grafico
 #define FRONTAL 1
@@ -47,7 +50,7 @@ typedef double Vector[3];
 
 typedef struct {
 	u1 w,h;
-	u1* sprite;
+	u1* bit;
 } Grafico;
 
 typedef struct {
@@ -68,6 +71,8 @@ typedef struct {
 	u1 vivo;
 	u1 objeto;
 } Personaje;
+
+typedef u1 (*Condicion)(Objeto*);
 
 extern Personaje personaje;
 extern Objeto objetos[OBJETOS];

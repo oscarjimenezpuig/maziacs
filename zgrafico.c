@@ -2,24 +2,28 @@
 ============================================================
   Fichero: zgrafico.c
   Creado: 06-06-2025
-  Ultima Modificacion: dijous, 19 de juny de 2025, 08:50:04
+  Ultima Modificacion: divendres, 20 de juny de 2025, 05:08:38
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
 
 #include "zgrafico.h"
 
-Grafico grafico_new(u1 w,u1 h,u1* s) {
+Grafico grafico_new(u1 w,u1 h,char x,char* l[]) {
 	Grafico g={0,0,NULL};
 	u2 d=w*h;
-	g.sprite=malloc(sizeof(u1)*d);
-	if(g.sprite) {
+	g.bit=malloc(sizeof(u1)*d);
+	if(g.bit) {
 		g.w=w;
 		g.h=h;
-		u1* ptr=s;
-		u1* ptrc=g.sprite;
-		while(ptr!=s+d) {
-			*ptrc++=*ptr++;
+		u1* ptru=g.bit;
+		for(u1 j=0;j<h;j++) {
+			char* ptr=l[j];
+			while(ptr!=l[j]+w) {
+				if(*ptr++==x) *ptru=0;
+				else *ptru=1;
+				ptru++;
+			}
 		}
 	}
 	return g;
@@ -27,7 +31,8 @@ Grafico grafico_new(u1 w,u1 h,u1* s) {
 
 void grafico_del(Grafico* g) {
 	if(g) {
-		free(g->sprite);
+		free(g->bit);
+		g->bit=NULL;
 		g->w=g->h=0;
 	}
 }
@@ -36,73 +41,42 @@ static double ratio_previa(u1 b) {
 	Punto poi={0,0,b*PARDIM};
 	Punto ppoi;
 	proyecta(poi,ppoi);
-	Punto pod={SPRDIM,0,b*PARDIM};
+	Punto pod={PIXDIM,0,b*PARDIM};
 	Punto ppod;
 	proyecta(pod,ppod);
-	return ((ppod[0]-ppoi[0])/SPRDIM);
+	return ((ppod[0]-ppoi[0])/PIXDIM);
 }
 
-static void grafico_clear(u2 px,u2 py,u1 w,u1 h,u1 ratio) {
-	u2 ix=px;
-	u2 iy=py-(ratio*8*(h-1));
-	u2 lx=px+w*8*ratio;
-	u2 ly=py+h*8*ratio;
-	for(u2 i=ix;i<lx;i++) {
-		for(u2 j=iy;j<ly;j++) {
-			off(i,j);
+static void pixel_onoff(u2 x,u2 y,u1 ratio,u1 o) {
+	for(u1 i=0;i<ratio;i++) {
+		for(u1 j=0;j<ratio;j++) {
+			if(o) on(x+i,y+j);
+			else off(x+i,y+j);
 		}
 	}
 }
 
-static void sprite_onoff(u1 sprite,u1 gh,u2 base_x,u2 base_y,u1 fila,u1 columna,double ratio,u1 on) {
-	u2 px=base_x+ratio*8*columna;
-	u2 py=base_y-(ratio*8*(gh-1-fila));
-	if(on) {
-		son(sprite,px,py,ratio,NAT);	
-	} else soff(sprite,px,py,ratio,NAT);
+static double round(double value) {
+	double intv=(int)value;
+	double decv=value-intv;
+	if(decv>=0.5) intv+=1.0;
+	return intv;
 }
 
-static void grafico_onoff(Grafico g,u1 a,u1 b,u1 on) {
-	const double FACTOR=SPRDIM/8; //factor de ratio de primer plano
-	Punto pgo={(PARDIM-SPRDIM*g.w)/2,SPRDIM*(g.h)+a,b*PARDIM};
+void grafico_on(Grafico g,u2 y,u2 z) {
+	const double FACTOR=PIXDIM; //factor de ratio de primer plano
+	Punto pgo={(PARDIM-PIXDIM*g.w)/2,PIXDIM*(g.h)+y,z*PARDIM};
 	Punto pgp;
 	proyecta(pgo,pgp);
-	double ratio=FACTOR*ratio_previa(b);
-	if(on) grafico_clear(pgp[0],pgp[1],g.w,g.h,ratio);
+	double ratio=FACTOR*ratio_previa(z);
+	ratio=round(ratio);//dbg
 	for(u1 f=0;f<g.h;f++) {
 		for(u1 c=0;c<g.w;c++) {
-			sprite_onoff(*(g.sprite+c+f*g.w),g.h,pgp[0],pgp[1],f,c,ratio,on);
+			u1 v=*(g.bit+c+f*g.w);
+			if(v) pixel_onoff(ratio*c+pgp[0],ratio*f+pgp[1],ratio,1);
+			else pixel_onoff(ratio*c+pgp[0],ratio*f+pgp[1],ratio,0);
 		}
 	}
 }
-
-void grafico_on(Grafico g,u2 a,u1 b) {
-	grafico_onoff(g,a,b,1);
-}
-
-void grafico_off(Grafico g,u2 a,u1 b) {
-	grafico_onoff(g,a,b,0);
-}
-
-static u1 give_line(char white,char* line) {
-	u1 total=0;
-	u1 value=128;
-	char* ptr=line;
-	while(*ptr!='\0') {
-		if(*ptr!=white) total+=value;
-		value=value>>1;
-		ptr++;
-	}
-	return total;
-}
-
-u1 sprite_data_new(u1 s,char w,char* d[]) {
-	u1 spdef[8];
-	for(u1 k=0;k<8;k++) {
-		spdef[k]=give_line(w,d[k]);
-	}
-	return snew(s,spdef[0],spdef[1],spdef[2],spdef[3],spdef[4],spdef[5],spdef[6],spdef[7]);
-}
-	
 
 
