@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zobjeto.c
   Creado: 08-06-2025
-  Ultima Modificacion: divendres, 20 de juny de 2025, 04:42:37
+  Ultima Modificacion: divendres, 20 de juny de 2025, 18:01:58
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -55,6 +55,14 @@ u1 objeto_find(Objeto** o,Condicion c) {
 		ptr++;
 	}
 	return os;
+}
+
+void objeto_clear() {
+	Objeto* ptr=objetos;
+	while(ptr!=objetos+OBJETOS) {
+		ptr->tipo=ptr->activo=0;
+		ptr++;
+	}
 }
 
 static u1 examinar_desplazar(u1 dir,u2* vx,u2* vy) {

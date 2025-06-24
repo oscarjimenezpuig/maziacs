@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zconstantes.h
   Creado: 04-06-2025
-  Ultima Modificacion: divendres, 20 de juny de 2025, 05:33:30
+  Ultima Modificacion: dimarts, 24 de juny de 2025, 06:43:28
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -25,15 +25,25 @@
 #define FACNIV 3 //este factor multiplicado por el nivel da la dimension lateral del laberinto
 #define PIXDIM 8 //dimension del pixel en un primer plano
 #define MRCRAT 2 //ratio de aumento de los marcadores
+#define MAXLEVEL 10 //maximo nivel
+#define ENEMIGOS (MAZIAC_MAX-MAZIAC_MIN+1) //numero maximo de enemigos
+#define MAZDEL (double)0.5 //tiempo de pausa del movimiento enemigo
+#define MENSIZ 256 //longitud de un mensaje
+#define MENSAJES 10 //maximo de mensajes acumulados
 
 //tipos
-#define COGIBLE 1
-#define ARMA 2
+#define SALIDA 1
+#define COGIBLE 2
+#define ARMA 4
+#define ENEMIGO 8
 
 //identificadores
-#define TESORO 1
-#define ESPADA_MIN 2
-#define ESPADA_MAX 12
+#define PUERTA 1
+#define TESORO 2
+#define ESPADA_MIN 3
+#define ESPADA_MAX 13
+#define MAZIAC_MIN 14
+#define MAZIAC_MAX 24
 
 //vision de grafico
 #define FRONTAL 1
@@ -50,6 +60,7 @@ typedef double Vector[3];
 
 typedef struct {
 	u1 w,h;
+	u1 alpha;
 	u1* bit;
 } Grafico;
 
@@ -66,19 +77,26 @@ typedef struct {
 
 typedef struct {
 	u2 x,y;
-	u1 nivel;
 	u1 face;
-	u1 vivo;
 	u1 objeto;
+	u1 activo;
 } Personaje;
 
 typedef u1 (*Condicion)(Objeto*);
+
+typedef char Mensaje[MENSIZ];
+
+typedef struct {
+	u1 size;
+	u1 read;
+	Mensaje mensaje[MENSAJES];
+} Mensajes;
 
 extern Personaje personaje;
 extern Objeto objetos[OBJETOS];
 
 extern u1 nivel;
-
+extern u1 quit;
 
 #endif //ZCONSTANTES_H
 

@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zdraw.c
   Creado: 04-06-2025
-  Ultima Modificacion: dimecres, 18 de juny de 2025, 17:57:16
+  Ultima Modificacion: diumenge, 22 de juny de 2025, 07:42:38
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -158,7 +158,7 @@ u1 total_draw(u2 x,u2 y,u1 d) {
 	}
 	for(int k=bloc;k>=0;k--) {
 		posicion_draw(k,d,salidas[k]);
-		nubes(k);
+		//nubes(k);
 
 	}
 	ret=visualizar_objetos(x,y,d);

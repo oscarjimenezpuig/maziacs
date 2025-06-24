@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zobjeto.h
   Creado: 06-06-2025
-  Ultima Modificacion: divendres, 20 de juny de 2025, 04:39:23
+  Ultima Modificacion: divendres, 20 de juny de 2025, 18:00:55
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -21,6 +21,9 @@ Objeto* objeto_get(u1 id);
 
 u1 objeto_find(Objeto** objetos,Condicion condicion);
 //se busca una serie de objetos que cumplan una determinada condicion
+
+void objeto_clear();
+//borra todos los objetos almacenados
 
 u1 visualizar_objetos(u1 x,u1 y,u1 direccion);
 //se visualizan los objetos por parte del personaje, devuelve 1 si hay alguno

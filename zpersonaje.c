@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zpersonaje.c
   Creado: 06-06-2025
-  Ultima Modificacion: divendres, 20 de juny de 2025, 05:15:54
+  Ultima Modificacion: dimarts, 24 de juny de 2025, 07:43:00
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -11,11 +11,20 @@
 
 Personaje personaje;
 
+static u1 findfacefree() {
+	u1 const DIRS[]={NORTH,EAST,SOUTH,WEST};
+	u1 sal=mundo_sal(personaje.x,personaje.y);
+	for(u1 k=0;k<4;k++) {
+		if(sal & DIRS[k]) return DIRS[k];
+	}
+	return 0;
+}
+
 void personaje_init() {
-	static u1 nivel=0;
 	personaje.x=personaje.y=1;
-	personaje.nivel=++nivel;
-	personaje.face=SOUTH;
+	personaje.objeto=0;
+	personaje.face=findfacefree();
+	personaje.activo=1;
 }
 
 static u1 personaje_gira(s1 direccion) {
@@ -109,15 +118,16 @@ static u2 len(char* str) {
 void personaje_marc() {
 	//nivel
 	u2 x,y;
-	x=y=1;
+	y=SCRH-8*MRCRAT;
+	x=1;
 	char str[20];
 	sprintf(str,"LEVEL %i",nivel);
 	ston(&x,&y,1,0,MRCRAT,NAT,str);
 	//encarado
 	char* const DIRF[]={"NORTH","SOUTH","EAST","WEST"};
 	sprintf(str,"%s",DIRF[cara(personaje.face)]);
-	x=1;
-	y=SCRH-8*MRCRAT;
+	u2 l=len(str);
+	x=(SCRW-8*MRCRAT*l)/2;
 	ston(&x,&y,1,0,MRCRAT,NAT,str);
 	//poseido
 	if(personaje.objeto) {
@@ -129,11 +139,74 @@ void personaje_marc() {
 	}
 }
 
-u1 personaje_mens(char* men,Attribute a,u1 r) {
+static Mensajes mensajes={0,0};
+static u1 showing=0;
+static u2 men_pos=0;
+static u2 men_end=0;
+static Mensaje actual;
+static u1 is_quited=0;
+
+static void men_copy(Mensaje d,Mensaje o) {
+	char* ptrd=d;
+	char* ptro=o;
+	while(*ptro!='\0'&& ptro-o<MENSIZ) {
+		*ptrd++=*ptro++;
+	}
+	*ptrd='\0';
 }
 
+static u1 mens_ins(Mensaje n) {
+	if(mensajes.size<MENSAJES) {
+		men_copy(mensajes.mensaje[mensajes.size++],n);
+		return 1;
+	}
+	return 0;
+}
 
-		
+static void men_clean() {
+	for(u2 i=0;i<SCRW;i++) {
+		for(u2 j=0;j<8*MRCRAT;j++) {
+			off(i,j);
+		}
+	}
+}
+
+static void men_show() {
+	const u2 ADV=8*MRCRAT;
+	if(showing) {
+		u2 x=men_pos;
+		u2 y=1;
+		men_clean();
+		ston(&x,&y,1,0,MRCRAT,NAT,actual);
+		if(men_pos==men_end) showing=0;
+		else men_pos-=ADV;
+		if(quit) {
+			is_quited=quit;
+			quit=0;
+		}
+		fls();
+	} else if(mensajes.read<mensajes.size) {
+		men_copy(actual,mensajes.mensaje[mensajes.read++]);
+		showing=1;
+		men_pos=SCRW;
+		men_end=-len(actual)*8*MRCRAT;
+		if(quit) {
+			is_quited=quit;
+			quit=0;
+		}
+	} else {
+		mensajes.size=mensajes.read=0;
+		if(is_quited) quit=is_quited;
+	}
+}
+
+u1 personaje_men_new(char* m) {
+	return mens_ins(m);
+}
+
+void personaje_men_show() {
+	men_show();
+}
 
 
 	
