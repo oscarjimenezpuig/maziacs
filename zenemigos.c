@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zenemigos.c
   Creado: 21-06-2025
-  Ultima Modificacion: dimarts, 24 de juny de 2025, 07:22:36
+  Ultima Modificacion: diumenge, 29 de juny de 2025, 06:54:57
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -269,6 +269,7 @@ static void lucha(Objeto* m) {
 		victoria=6;
 		personaje.objeto=0;
 	}
+	personaje_men_new("YOU FIND A MAZIAC... FIGHT BEGIN!");
 	u1 dado=rand()%6+1;
 	if(dado<=victoria) {
 		personaje_men_new("YOU KILL THE MAZIAC");
@@ -279,6 +280,7 @@ static void lucha(Objeto* m) {
 		personaje.activo=0;
 		quit=1;
 	}
+	personaje_visto=1;
 }
 	
 static u1 personaje_aqui(Objeto* m) {

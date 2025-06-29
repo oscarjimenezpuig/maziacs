@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zpersonaje.c
   Creado: 06-06-2025
-  Ultima Modificacion: dimarts, 24 de juny de 2025, 07:43:00
+  Ultima Modificacion: diumenge, 29 de juny de 2025, 07:09:38
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -76,9 +76,17 @@ static u1 personaje_coge() {
 		if(!poseido || poseido->tipo!=o[0]->tipo) {
 			o[0]->x=o[0]->y=-1;
 			personaje.objeto=o[0]->id;
+			String str;
 			if(poseido) {
 				poseido->x=personaje.x;
 				poseido->y=personaje.y;
+				sprintf(str,"YOU DROP %s...",poseido->nombre);
+				personaje_men_new(str);
+			}
+			sprintf(str,"YOU PICK %s...",o[0]->nombre);
+			personaje_men_new(str);
+			if((o[0]->tipo & 4)==0) {
+				personaje_men_new("RUN TO HOME!");
 			}
 		return 1;
 		}
@@ -141,8 +149,8 @@ void personaje_marc() {
 
 static Mensajes mensajes={0,0};
 static u1 showing=0;
-static u2 men_pos=0;
-static u2 men_end=0;
+static int men_pos=0;
+static int men_end=0;
 static Mensaje actual;
 static u1 is_quited=0;
 
@@ -163,7 +171,7 @@ static u1 mens_ins(Mensaje n) {
 	return 0;
 }
 
-static void men_clean() {
+static void men_scr_clean() {
 	for(u2 i=0;i<SCRW;i++) {
 		for(u2 j=0;j<8*MRCRAT;j++) {
 			off(i,j);
@@ -171,20 +179,22 @@ static void men_clean() {
 	}
 }
 
-static void men_show() {
+static u1 men_show() {
+	u1 ret=0;
 	const u2 ADV=8*MRCRAT;
 	if(showing) {
 		u2 x=men_pos;
 		u2 y=1;
-		men_clean();
+		men_scr_clean();
 		ston(&x,&y,1,0,MRCRAT,NAT,actual);
-		if(men_pos==men_end) showing=0;
+		if(men_pos<=men_end) showing=0;
 		else men_pos-=ADV;
 		if(quit) {
 			is_quited=quit;
 			quit=0;
 		}
 		fls();
+		ret=1;
 	} else if(mensajes.read<mensajes.size) {
 		men_copy(actual,mensajes.mensaje[mensajes.read++]);
 		showing=1;
@@ -198,14 +208,15 @@ static void men_show() {
 		mensajes.size=mensajes.read=0;
 		if(is_quited) quit=is_quited;
 	}
+	return ret;
 }
 
 u1 personaje_men_new(char* m) {
 	return mens_ins(m);
 }
 
-void personaje_men_show() {
-	men_show();
+u1 personaje_men_show() {
+	return men_show();
 }
 
 

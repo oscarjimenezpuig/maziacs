@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zmundo.h
   Creado: 04-06-2025
-  Ultima Modificacion: diumenge, 22 de juny de 2025, 14:35:04
+  Ultima Modificacion: diumenge, 29 de juny de 2025, 06:30:49
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -26,8 +26,3 @@ u2 mundo_dim();
 
 void mundo_rand(u2* x,u2* y);
 //da una posicion random del mundo (vacia)
-
-void mundo_prt(u2 x,u2 y);
-//imprime el mundo actual
-
-

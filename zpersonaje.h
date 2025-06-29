@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zpersonaje.h
   Creado: 06-06-2025
-  Ultima Modificacion: dimarts, 24 de juny de 2025, 07:38:41
+  Ultima Modificacion: diumenge, 29 de juny de 2025, 05:52:37
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -21,6 +21,6 @@ void personaje_marc();
 u1 personaje_men_new(char* mensaje);
 //se introduce un nuevo mensaje
 
-void personaje_men_show();
+u1 personaje_men_show();
 //se saca por pantalla un mensaje
 

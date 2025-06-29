@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zconstantes.h
   Creado: 04-06-2025
-  Ultima Modificacion: dimarts, 24 de juny de 2025, 06:43:28
+  Ultima Modificacion: diumenge, 29 de juny de 2025, 07:00:13
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -57,6 +57,7 @@
 
 typedef double Punto[3];
 typedef double Vector[3];
+typedef char String[256];
 
 typedef struct {
 	u1 w,h;

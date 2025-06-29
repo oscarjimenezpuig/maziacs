@@ -2,7 +2,7 @@
 ============================================================
   Fichero: zmundo.c
   Creado: 04-06-2025
-  Ultima Modificacion: dissabte, 21 de juny de 2025, 19:59:42
+  Ultima Modificacion: diumenge, 29 de juny de 2025, 06:30:49
   oSCAR jIMENEZ pUIG                                       
 ============================================================
 */
@@ -77,19 +77,6 @@ void mundo_rand(u2* x,u2* y) {
 		}
 		*x=xx;
 		*y=yy;
-	}
-}
-
-void mundo_prt(u2 x,u2 y) {
-	char chr;
-	for(u2 j=0;j<mundo_dimension;j++) {
-		for(u2 i=0;i<mundo_dimension;i++) {
-			chr=' ';
-			if(i==x && j==y) chr='*';
-			if(mundo_get(i,j)) printf("%c",chr);
-			else printf("\033[7m%c\033[0m",chr);
-		}
-		puts("");
 	}
 }
 
